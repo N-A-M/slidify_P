@@ -2,32 +2,29 @@
 title       : Cars MPG Predictors Presentation
 subtitle    : 
 author      : Neveen Mohamed
-job         : BI Analysis and Data Science specialist
+job         : BI and Data Science 2016
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
 widgets     : [shiny,bootstrap,interactive,htmlwidgets]       # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 knit        : slidify::knit2slides
----
+--- 
+
 ## Presentation Content
 
 This presentation goes over the shiny project delivered in this class. The project uses 
 mtcars data and allows an interactive selection of predictors from the dataset to relate with the MPG.
 
-The presentation illustrates the use of interactive R code as follows:
-*  ui.R uses check boxs to allow selecting from the indicator list.
-*  The input selection is passed in the application to the server.R where is processes it.
-*  A message is displayed if no predictors were passed to the server.
-*  The output chart is displayed showing the relation between MPG and the predictors.
 
+*  Illustration of the input selection to choose the MPG predictors
+*  The input is processed at the server to validate selections exist
+*  The output chart is displayed
 
 --- .class #id &interactive
 
-## Selecting the predictors
-The project uses a group of check boxes to allow the user to select the predictor(s) that need to be researched. 
-
-Here is what the selections look like:
+## Input parameters
+The project uses group select input to allow the user to select the predictor(s) that needs to be researched. 
 
 <!--html_preserve--><div id="params" class="form-group shiny-input-checkboxgroup shiny-input-container">
 <label class="control-label" for="params">Parameters</label>
@@ -90,22 +87,31 @@ Here is what the selections look like:
 </div><!--/html_preserve-->
 
 --- .class #id 
-### Input Validation and Output MPG versus predictors chart
+## Predictors selection validation
 
+The user clicks on submit button at which point the input parameters get sent to the server,
+the server validates the input and displays a message if no selections were made. 
 
-The input from the selectors is sent to server.R which process the selections and displays a chart showing the relation between MPG and the selected predictor(s). googleVis package is used to construct the chart.
-If no variables were selected a message is displayed in the output informing the user to make a selection.  
 
 [1] "Check at least one parameter."
+
+--- .class #id 
+
+## The output chart
+
+If entry is valid the chart gets displayed using googleVis. The chart shows a trend 
+exponential fit for the first selected parameter.   
+Multiple trend lines are beyond the scope of this project.
+
 <!-- ScatterChart generated in R 3.1.2 by googleVis 0.5.10 package -->
-<!-- Sat Mar 19 01:14:39 2016 -->
+<!-- Sat Mar 19 13:11:52 2016 -->
 
 
 <!-- jsHeader -->
 <script type="text/javascript">
  
 // jsData 
-function gvisDataScatterChartID10f0b6b5421 () {
+function gvisDataScatterChartID152c6161b57 () {
 var data = new google.visualization.DataTable();
 var datajson =
 [
@@ -509,8 +515,8 @@ return(data);
 }
  
 // jsDrawChart
-function drawChartScatterChartID10f0b6b5421() {
-var data = gvisDataScatterChartID10f0b6b5421();
+function drawChartScatterChartID152c6161b57() {
+var data = gvisDataScatterChartID152c6161b57();
 var options = {};
 options["allowHtml"] = true;
 options["width"] =    600;
@@ -518,7 +524,7 @@ options["height"] =    400;
 options["trendlines"] = {0: { type: 'exponential'}};
 
     var chart = new google.visualization.ScatterChart(
-    document.getElementById('ScatterChartID10f0b6b5421')
+    document.getElementById('ScatterChartID152c6161b57')
     );
     chart.draw(data,options);
     
@@ -542,9 +548,9 @@ if (newPackage)
   pkgs.push(chartid);
   
 // Add the drawChart function to the global list of callbacks
-callbacks.push(drawChartScatterChartID10f0b6b5421);
+callbacks.push(drawChartScatterChartID152c6161b57);
 })();
-function displayChartScatterChartID10f0b6b5421() {
+function displayChartScatterChartID152c6161b57() {
   var pkgs = window.__gvisPackages = window.__gvisPackages || [];
   var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
   window.clearTimeout(window.__gvisLoad);
@@ -568,15 +574,10 @@ callbacks.shift()();
 </script>
  
 <!-- jsChart -->  
-<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartScatterChartID10f0b6b5421"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartScatterChartID152c6161b57"></script>
  
 <!-- divChart -->
   
-<div id="ScatterChartID10f0b6b5421" 
+<div id="ScatterChartID152c6161b57" 
   style="width: 600; height: 400;">
 </div>
-
-
-
-
-

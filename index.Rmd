@@ -2,85 +2,94 @@
 title       : Cars MPG Predictors Presentation
 subtitle    : 
 author      : Neveen Mohamed
-job         : BI Analysis and Data Science specialist
+job         : BI and Data Science 2016
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
 widgets     : [shiny,bootstrap,interactive,htmlwidgets]       # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 knit        : slidify::knit2slides
----
+--- 
+
 ## Presentation Content
 
 This presentation goes over the shiny project delivered in this class. The project uses 
 mtcars data and allows an interactive selection of predictors from the dataset to relate with the MPG.
 
-The presentation illustrates the use of interactive R code as follows:
-*  ui.R uses check boxs to allow selecting from the indicator list.
-*  The input selection is passed in the application to the server.R where is processes it.
-*  A message is displayed if no predictors were passed to the server.
-*  The output chart is displayed showing the relation between MPG and the predictors.
 
+*  Illustration of the input selection to choose the MPG predictors
+*  The input is processed at the server to validate selections exist
+*  The output chart is displayed
 
 --- .class #id &interactive
 
-## Selecting the predictors
-The project uses a group of check boxes to allow the user to select the predictor(s) that need to be researched. 
+## Input parameters
+The project uses group select input to allow the user to select the predictor(s) that needs to be researched. 
 
-Here is what the selections look like:
+```{r opts.label='shiny',cache=FALSE,echo=FALSE,error=FALSE,tidy=TRUE, message=FALSE,warning=FALSE,comment=FALSE,prompt=FALSE,results='markup'}
 
-```{r opts.label='shiny',message=FALSE,error=FALSE,comment=FALSE,prompt= FALSE,echo=FALSE,results='asis'}
+library(slidifyLibraries)
+library(shiny)
 
-data(mtcars)
 checkboxGroupInput("params","Parameters",choices=
-                         c("disp Displacement (cu.in.)"="disp",
-                           "hp   Horse Power"="hp",
-                           "drat Rear axle ratio"="drat",
-                           "wt   Weight (lb/1000)"="wt",
-                           "qsec 1/4 mile time"="qsec",
-                           "vs   V/S"="vs",
-                           "am   Transmission (0 = automatic, 1 = manual)"="am",
-                           "carb Number of carburetors"="carb",
-                           "gear Number of forward gears"="gear"))
+                       c("disp Displacement (cu.in.)"="disp",
+                         "hp   Horse Power"="hp",
+                         "drat Rear axle ratio"="drat",
+                         "wt   Weight (lb/1000)"="wt",
+                         "qsec 1/4 mile time"="qsec",
+                         "vs   V/S"="vs",
+                         "am   Transmission (0 = automatic, 1 = manual)"="am",
+                         "carb Number of carburetors"="carb",
+                         "gear Number of forward gears"="gear"))
 
-    
+
 ```
 
 --- .class #id 
-### Input Validation and Output MPG versus predictors chart
+## Predictors selection validation
+
+The user clicks on submit button at which point the input parameters get sent to the server,
+the server validates the input and displays a message if no selections were made. 
 
 
-The input from the selectors is sent to server.R which process the selections and displays a chart showing the relation between MPG and the selected predictor(s). googleVis package is used to construct the chart.
-If no variables were selected a message is displayed in the output informing the user to make a selection.  
+```{r opts.label='shiny',cache=FALSE,echo=FALSE,error=FALSE,tidy=TRUE, message=FALSE,warning=FALSE,comment=FALSE,prompt=FALSE,results='asis'}
+   print('Check at least one parameter.')
+```
 
-```{r ,cache=FALSE,message=FALSE,error=FALSE,comment=FALSE,warning= FALSE, prompt = FALSE,echo=FALSE,results='asis'}
-require(googleVis)
-require(shiny)
- 
-print('Check at least one parameter.')
+--- .class #id 
 
-df <- data.frame(mpg=mtcars$mpg
-                 ,disp=mtcars$disp
-                 ,hp=mtcars$hp
-                 ,drat=mtcars$drat
-                 ,wt=mtcars$wt
-                 ,qsec=mtcars$qsec
-                 ,vs=mtcars$vs
-                 ,am=mtcars$am
-                 ,carb=mtcars$carb
-                 ,gear=mtcars$gear
-                 )
-G<- gvisScatterChart(
-    df, 
-    options=list(
-        width=600
-        ,height=400 
-        ,trendlines="{0: { type: 'exponential'}}"))
+## The output chart
+
+If entry is valid the chart gets displayed using googleVis. The chart shows a trend 
+exponential fit for the first selected parameter.   
+Multiple trend lines are beyond the scope of this project.
+
+```{r opts.label='shiny',cache=FALSE,echo=FALSE,error=FALSE,tidy=TRUE, message=FALSE,warning=FALSE,comment=FALSE,prompt=FALSE,results='asis'}
+
+library(slidifyLibraries)
+library(shiny)
+library(googleVis)
+data(mtcars)
+
+        df <- data.frame(mpg=mtcars$mpg
+                         ,disp=mtcars$disp
+                         ,hp=mtcars$hp
+                         ,drat=mtcars$drat
+                         ,wt=mtcars$wt
+                         ,qsec=mtcars$qsec
+                         ,vs=mtcars$vs
+                         ,am=mtcars$am
+                         ,carb=mtcars$carb
+                         ,gear=mtcars$gear
+        )
+        G <- 
+            gvisScatterChart(
+                df, 
+                options=list(
+                    width=600
+                    ,height=400 
+                    ,trendlines="{0: { type: 'exponential'}}"))
+        
 print(G,"chart")
 
 ```
-
-
-
-
-
