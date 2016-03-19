@@ -98,14 +98,14 @@ If no variables were selected a message is displayed in the output informing the
 
 [1] "Check at least one parameter."
 <!-- ScatterChart generated in R 3.1.2 by googleVis 0.5.10 package -->
-<!-- Fri Mar 18 23:19:09 2016 -->
+<!-- Sat Mar 19 01:14:39 2016 -->
 
 
 <!-- jsHeader -->
 <script type="text/javascript">
  
 // jsData 
-function gvisDataScatterChartID251059e65908 () {
+function gvisDataScatterChartID10f0b6b5421 () {
 var data = new google.visualization.DataTable();
 var datajson =
 [
@@ -509,8 +509,8 @@ return(data);
 }
  
 // jsDrawChart
-function drawChartScatterChartID251059e65908() {
-var data = gvisDataScatterChartID251059e65908();
+function drawChartScatterChartID10f0b6b5421() {
+var data = gvisDataScatterChartID10f0b6b5421();
 var options = {};
 options["allowHtml"] = true;
 options["width"] =    600;
@@ -518,7 +518,7 @@ options["height"] =    400;
 options["trendlines"] = {0: { type: 'exponential'}};
 
     var chart = new google.visualization.ScatterChart(
-    document.getElementById('ScatterChartID251059e65908')
+    document.getElementById('ScatterChartID10f0b6b5421')
     );
     chart.draw(data,options);
     
@@ -542,9 +542,9 @@ if (newPackage)
   pkgs.push(chartid);
   
 // Add the drawChart function to the global list of callbacks
-callbacks.push(drawChartScatterChartID251059e65908);
+callbacks.push(drawChartScatterChartID10f0b6b5421);
 })();
-function displayChartScatterChartID251059e65908() {
+function displayChartScatterChartID10f0b6b5421() {
   var pkgs = window.__gvisPackages = window.__gvisPackages || [];
   var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
   window.clearTimeout(window.__gvisLoad);
@@ -568,11 +568,11 @@ callbacks.shift()();
 </script>
  
 <!-- jsChart -->  
-<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartScatterChartID251059e65908"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartScatterChartID10f0b6b5421"></script>
  
 <!-- divChart -->
   
-<div id="ScatterChartID251059e65908" 
+<div id="ScatterChartID10f0b6b5421" 
   style="width: 600; height: 400;">
 </div>
 
