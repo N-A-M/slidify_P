@@ -2,14 +2,14 @@
 title       : Cars MPG Predictors Presentation
 subtitle    : 
 author      : Neveen Mohamed
-job         : Analysis and Data person
+job         : BI and Data Science 2016
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
 widgets     : [shiny,bootstrap,interactive,htmlwidgets]       # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 knit        : slidify::knit2slides
----
+--- 
 
 ## Presentation Content
 
@@ -17,83 +17,83 @@ This presentation goes over the shiny project delivered in this class. The proje
 mtcars data and allows an interactive selection of predictors from the dataset to relate with the MPG.
 
 
-1. Overview of the shiny project
-2. Overview of ui.R code
-3. Overview of server.R code
-4. Overview of output
+*  Illustration of the input selection to choose the MPG predictors
+*  The input is processed at the server to validate selections exist
+*  The output chart is displayed
 
 --- .class #id &interactive
 
-## Interactive R code
-The project uses a select input to allow the user to select the predictor that needs to be researched. 
+## Input parameters
+The project uses group select input to allow the user to select the predictor(s) that needs to be researched. 
 
-```{r opts.label = 'shiny',cache=FALSE,echo=FALSE,message=FALSE,warning=FALSE,results='asis'}
+```{r opts.label='shiny',cache=FALSE,echo=FALSE,error=FALSE,tidy=TRUE, message=FALSE,warning=FALSE,comment=FALSE,prompt=FALSE,results='markup'}
 
 library(slidifyLibraries)
-require(rCharts)
-data(mtcars)
-
-slidifyUI(pageWithSidebar(
-    headerPanel("Cars MPG Predictors"),
-    sidebarPanel(
-        selectInput("carsParamID","Select Cars Param:",
-                    c(
-                        "Horse Power" = "hp",
-                        "Cylinders" = "cyl",
-                        "Gears" = "gear"))
-        ),
-    mainPanel(
-        )
-    ))
-
-    
-```
-
---- .class #id 
-## ui.R code
-
-The slidify App has two functions ui.R which is listed below:
-
-```{r ,cache=FALSE,results='hide'}
 library(shiny)
 
-shinyUI(pageWithSidebar(
-    headerPanel("Cars MPG Predictors"),
-    sidebarPanel(
-         selectInput("carsParamID","Select Cars Param:",
-                      c(
-                        "Horse Power" = "hp",
-                        "Cylinders" = "cyl",
-                        "Gears" = "gear")),
-         submitButton("Update Graph")
-        ),
-    mainPanel(
-        plotOutput('newPlot')
-        )
-    ))
+checkboxGroupInput("params","Parameters",choices=
+                       c("disp Displacement (cu.in.)"="disp",
+                         "hp   Horse Power"="hp",
+                         "drat Rear axle ratio"="drat",
+                         "wt   Weight (lb/1000)"="wt",
+                         "qsec 1/4 mile time"="qsec",
+                         "vs   V/S"="vs",
+                         "am   Transmission (0 = automatic, 1 = manual)"="am",
+                         "carb Number of carburetors"="carb",
+                         "gear Number of forward gears"="gear"))
+
+
 ```
 
 --- .class #id 
-## server.R code
+## Predictors selection validation
 
-and server.R which is listed below:
+The user clicks on submit button at which point the input parameters get sent to the server,
+the server validates the input and displays a message if no selections were made. 
 
-```{r ,cache=FALSE,results='hide'}
-data(mtcars)
-library("ggplot2")
 
-shinyServer(
-    function(input , output){
-        df <- data.frame(mpg=mtcars$mpg
-                         ,cyl=as.factor(mtcars$cyl)
-                         ,hp=mtcars$hp
-                         ,gear=mtcars$gear
-                         )
-        p1 <- ggplot(df)+geom_point(aes(x=get(input$carsParamID),y=mpg)) 
-        output$newPlot<-renderPlot(p1)
-    }
-    )
+```{r opts.label='shiny',cache=FALSE,echo=FALSE,error=FALSE,tidy=TRUE, message=FALSE,warning=FALSE,comment=FALSE,prompt=FALSE,results='asis'}
+   print('Check at least one parameter.')
 ```
+
+--- .class #id 
+
+## The output chart
+
+If entry is valid the chart gets displayed using googleVis. The chart shows a trend 
+exponential fit for the first selected parameter.   
+Multiple trend lines are beyond the scope of this project.
+
+```{r opts.label='shiny',cache=FALSE,echo=FALSE,error=FALSE,tidy=TRUE, message=FALSE,warning=FALSE,comment=FALSE,prompt=FALSE,results='asis'}
+
+library(slidifyLibraries)
+library(shiny)
+library(googleVis)
+data(mtcars)
+
+        df <- data.frame(mpg=mtcars$mpg
+                         ,disp=mtcars$disp
+                         ,hp=mtcars$hp
+                         ,drat=mtcars$drat
+                         ,wt=mtcars$wt
+                         ,qsec=mtcars$qsec
+                         ,vs=mtcars$vs
+                         ,am=mtcars$am
+                         ,carb=mtcars$carb
+                         ,gear=mtcars$gear
+        )
+        G <- 
+            gvisScatterChart(
+                df, 
+                options=list(
+                    width=600
+                    ,height=400 
+                    ,trendlines="{0: { type: 'exponential'}}"))
+        
+print(G,"chart")
+
+```
+
 
 
 
